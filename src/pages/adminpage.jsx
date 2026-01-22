@@ -1,5 +1,6 @@
 import { Link, Route, Routes } from "react-router-dom";
-// මෙතන තියෙන ඔක්කොම icons 'tb' (Tabler Icons) වලින් අරන් තියෙන්නේ
+import AdminProductPage from "./admin/adminProductPage";
+import ProductAddPage from "./admin/productaddapge";
 import { 
   TbLayoutDashboardFilled, 
   TbPackage, 
@@ -54,9 +55,10 @@ export default function AdminPage() {
                 </div>
                <Routes path="/*"> 
                 <Route path="/dashboard" element={<div className="p-6">This is the Admin Dashboard.</div>} />
-                <Route path="/products" element={<div className="p-6">Manage your Products here.</div>} />
+                <Route path="/products" element={<AdminProductPage />} />
                 <Route path="/orders" element={<div className="p-6">View and process Orders here.</div>} />
                 <Route path="/customers" element={<div className="p-6">Customer information and management.</div>} />
+                <Route path="/addProduct" element={<ProductAddPage />} />
                 <Route path="/*" element={<div className="p-6">this not an admin page.</div>} />
                </Routes>
             </div>
