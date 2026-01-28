@@ -1,48 +1,65 @@
-import { FaPlusCircle, FaTag, FaDollarSign, FaBoxes, FaAlignLeft, FaImage, FaListUl } from "react-icons/fa";
+import { FaPlusCircle, FaTag, FaDollarSign, FaBoxes, FaAlignLeft, FaImage, FaListUl, FaCloudUploadAlt } from "react-icons/fa";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import uploadMedia from "../../utils/mediauplord";
 
 export default function ProductAddPage() {
 
     const [productId, setProductId] = useState("");
     const [productName, setProductName] = useState("");
     const [altNames, setAltNames] = useState(""); 
-    const [images, setImages] = useState("");     
+    const [imagefile, setImagefile] = useState([]); 
+    const [uploadedUrls, setUploadedUrls] = useState([]); 
     const [price, setPrice] = useState("");
     const [lastPrice, setLastPrice] = useState("");
     const [stock, setStock] = useState("");
     const [description, setDescription] = useState("");
-    const navigation = useNavigate()
+    const navigation = useNavigate();
+
+    const handleUploadImages = async () => {
+        
+        if (!imagefile || imagefile.length === 0) {
+            alert("Please select images first!");
+            return;
+        }
+
+        const promArray = [];
+        for (let i = 0; i < imagefile.length; i++) {
+            promArray.push(uploadMedia(imagefile[i]));
+        }
+        const urls = await Promise.all(promArray);
+        setUploadedUrls(urls);
+        alert("Images uploaded successfully!");
+    };
 
     const handleAddProduct = () => {
-
         const productData = {
-             productid:productId,
-             productname:productName,
-             altname:altNames.split(","), 
-             image:images.split(","),  
-             price:price,
-             lasprice:lastPrice, 
-             stock:stock,
-             description:description
+             productid: productId,
+             productname: productName,
+             altname: altNames.split(","), 
+             image: uploadedUrls, 
+             price: price,
+             lasprice: lastPrice, 
+             stock: stock,
+             description: description
         };
+
         const token = localStorage.getItem("token");
-        axios.post("http://localhost:5001/product", productData, {
+        axios.post(import.meta.env.VITE_BACKEND_URL+"/product", productData, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
-        .then(()=> {
+        .then(() => {
             alert("Product added successfully!");       
-        navigation("/admin/addProduct")
-     
-    }).catch((error) => {
-        console.error("There was an error adding the product!", error);
-        alert("Failed to add product. Please try again.");
-    });
+            navigation("/admin/addProduct");
+        }).catch((error) => {
+            console.error("There was an error adding the product!", error);
+            alert("Failed to add product. Please try again.");
+        });
     }
+
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
             <div className="w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
@@ -79,10 +96,17 @@ export default function ProductAddPage() {
                     </div>
 
                     <div className="space-y-1">
-                        <label className="text-xs font-bold text-gray-500 uppercase">Image URLs (Separate by comma)</label>
-                        <div className="relative">
-                            <input type="text" value={images} onChange={(e) => setImages(e.target.value)} className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border rounded-xl focus:border-blue-500 outline-none" placeholder="http://image1.jpg, http://image2.jpg" />
-                            <FaImage className="absolute left-3 top-3.5 text-gray-400" />
+                        <label className="text-xs font-bold text-gray-500 uppercase">Step 1: Select & Upload Images</label>
+                        <div className="flex items-center gap-2">
+                            <input type="file" onChange={(e) => setImagefile(e.target.files)} multiple className="w-full text-sm" />
+                            
+                            <button 
+                                type="button" 
+                                onClick={handleUploadImages} 
+                                className="bg-green-600 text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-green-700"
+                            >
+                                <FaCloudUploadAlt /> Upload
+                            </button>
                         </div>
                     </div>
 
@@ -109,8 +133,12 @@ export default function ProductAddPage() {
                         </div>
                     </div>
 
-                    <button onClick={handleAddProduct} className="w-full bg-blue-600 text-white font-bold py-3.5 rounded-xl shadow-lg hover:bg-blue-700 transition-all transform active:scale-95">
-                        Add Product to Database
+                    <button 
+                        onClick={handleAddProduct} 
+                        disabled={uploadedUrls.length === 0}
+                        className={`w-full font-bold py-3.5 rounded-xl shadow-lg transition-all transform active:scale-95 ${uploadedUrls.length === 0 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+                    >
+                        Step 2: Add Product to Database
                     </button>
                 </div>
             </div>

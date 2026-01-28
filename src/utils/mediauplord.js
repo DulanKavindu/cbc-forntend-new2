@@ -18,7 +18,7 @@ export default function uploadMedia(file) {
         const fileType = fileArray[fileArray.length - 1];
 
         const time = new Date().getTime();
-        const newFileName = time + "." + fileType;
+        const newFileName = time + file.name+"." + fileType;
 
         
         supabase.storage

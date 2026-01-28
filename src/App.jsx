@@ -16,7 +16,7 @@ function App() {
       <BrowserRouter>
         <Toaster></Toaster>
         <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/*" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signin" element={<SignupPage />} />
         <Route path ="/testing" element ={<Test/>}/>

@@ -9,7 +9,7 @@ export default function LoginPage() {
 
   function login() {
    
-    axios.post("http://localhost:5001/user/login", {
+    axios.post(import.meta.env.VITE_BACKEND_URL+"/user/login", {
       email: email,
       password: password
     })
@@ -69,7 +69,7 @@ export default function LoginPage() {
           </div>
 
           <button 
-            className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl mt-4 hover:bg-blue-700 hover:shadow-lg transform hover:-translate-y-0.5 transition-all active:scale-95"
+            className="w-full bg-accent text-white font-bold py-3 rounded-xl mt-4 hover:bg-blue-700 hover:shadow-lg transform hover:-translate-y-0.5 transition-all active:scale-95"
             onClick={login}
           >
             Login Now
