@@ -17,16 +17,21 @@ export default function ProductOverview() {
             .then((res) => {
                 if (res.data == null) {
                     setState("not found");
-                } else {
+                    return;
+                }
+  
+                
+                if (res.data!= null) {
                     setProduct(res.data); 
                     setState("loaded");
+                    console.log(res.data);
                 }
             })
             .catch((err) => {
                 console.error(err);
                 setState("not found");
             });
-    }, []); 
+    }, [productId]); 
 
     return (
         <div className="min-h-screen bg-primary">
@@ -54,9 +59,9 @@ export default function ProductOverview() {
 
                     
                         <div className="space-y-4">
-                            <h1 className="text-4xl font-black text-secondary">{product.productname}</h1>
-                            <p className="text-accent font-bold text-2xl">{product.price}</p>
-                            <p className="text-gray-600 leading-relaxed">{product.description}</p>
+                            <h1 className="text-4xl font-black text-secondary">{product?.productname}</h1>
+                            <p className="text-accent font-bold text-2xl">{product?.productid}</p>
+                            <p className="text-gray-600 leading-relaxed">{product?.description}</p>
                             
                             <div className="pt-6">
                                 <button className="bg-secondary text-white px-10 py-4 rounded-2xl font-bold hover:scale-105 transition-transform">
