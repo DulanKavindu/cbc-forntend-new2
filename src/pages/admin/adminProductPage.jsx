@@ -2,11 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaEdit, FaTrash, FaBoxOpen } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 
 export default function AdminProductPage() {
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState(false);
+
 
     useEffect(() => {
         if (!loading) {
@@ -17,6 +18,7 @@ export default function AdminProductPage() {
             });
         }
     }, [loading]);
+        const navigate = useNavigate();
 
     return (
         <div className="min-h-screen bg-gray-100 p-8">
@@ -70,7 +72,11 @@ export default function AdminProductPage() {
                                         </td>
                                         <td className="py-4 px-4 text-right">
                                             <div className="flex justify-end gap-3">
-                                                <button className="p-2 text-blue-500 hover:bg-blue-100 rounded-lg transition-all" title="Edit">
+                                                <button className="p-2 text-blue-500 hover:bg-blue-100 rounded-lg transition-all" title="Edit"
+                                                onClick={()=>{
+                                                    navigate("/admin/product/productEdit",{state:{product:product1}})
+                                                }}
+                                                >
                                                     <FaEdit size={18} />
                                                 </button>
                                                 <button className="p-2 text-red-500 hover:bg-red-100 rounded-lg transition-all" title="Delete" onClick={() => {

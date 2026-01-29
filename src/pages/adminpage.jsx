@@ -9,6 +9,7 @@ import {
   TbSettings,
   TbLogout
 } from "react-icons/tb";
+import EditProductPage from "./admin/editproductpage";
 
 export default function AdminPage() {
     return (
@@ -56,9 +57,10 @@ export default function AdminPage() {
                <Routes path="/*"> 
                 <Route path="/dashboard" element={<div className="p-6">This is the Admin Dashboard.</div>} />
                 <Route path="/products" element={<AdminProductPage />} />
-                <Route path="/orders" element={<div className="p-6">View and process Orders here.</div>} />
-                <Route path="/customers" element={<div className="p-6">Customer information and management.</div>} />
-                <Route path="/addProduct" element={<ProductAddPage />} />
+                <Route path="/product/orders" element={<div className="p-6">View and process Orders here.</div>} />
+                <Route path="/product/customers" element={<div className="p-6">Customer information and management.</div>} />
+                <Route path="/product/addProduct" element={<ProductAddPage />} />
+                  <Route path="/product/productEdit" element={<EditProductPage />} />
                 <Route path="/*" element={<div className="p-6">this not an admin page.</div>} />
                </Routes>
             </div>
