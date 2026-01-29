@@ -14,7 +14,7 @@ import EditProductPage from "./admin/editproductpage";
 export default function AdminPage() {
     return (
         <div className="bg-gray-100 flex w-full h-screen">
-            {/* Sidebar */}
+         
             <div className="bg-blue-700 w-[20%] flex flex-col h-screen text-gray-100 p-4 shadow-lg">
                 <div className="text-xl font-bold mb-8 p-2 border-b border-blue-500">Admin Panel</div>
                 
@@ -40,7 +40,7 @@ export default function AdminPage() {
                     </Link>
                 </div>
 
-                {/* Logout Button */}
+               
                 <div className="mt-auto border-t border-blue-500 pt-4">
                     <Link to="/login" className="flex items-center gap-3 p-3 hover:bg-red-600 rounded-lg transition">
                         <TbLogout className="text-xl" />
@@ -49,7 +49,7 @@ export default function AdminPage() {
                 </div>
             </div>
 
-            {/* Main Content Area */}
+
             <div className="w-[80%] h-screen text-gray-800 bg-white shadow-inner">
                 <div className="p-6 border-b">
                     <h2 className="text-2xl font-semibold">Welcome Back, Admin!</h2>

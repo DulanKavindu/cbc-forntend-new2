@@ -53,7 +53,7 @@ export default function ProductAddPage() {
         })
         .then(() => {
             alert("Product added successfully!");       
-            navigation("/admin/addProduct");
+            navigation("/admin/products");
         }).catch((error) => {
             console.error("There was an error adding the product!", error);
             alert("Failed to add product. Please try again.");

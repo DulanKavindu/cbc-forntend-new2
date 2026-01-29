@@ -12,7 +12,7 @@ export default function AdminProductPage() {
     useEffect(() => {
         if (!loading) {
             axios.get(import.meta.env.VITE_BACKEND_URL+"/product").then((response) => {
-                setProduct(response.data.list);
+                setProduct(response.data);
                 console.log(response.data)
                 setLoading(true);
             });
@@ -102,7 +102,7 @@ export default function AdminProductPage() {
                 )}
             </div>
 
-            <Link to="/admin/addProduct" className="fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all">
+            <Link to="/admin/product/addProduct" className="fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all">
                 <FaBoxOpen size={24} />
             </Link>
         </div>
