@@ -11,8 +11,8 @@ export default function HomePage() {
         <Hadder />
       </div>
       <div>
-        <Routes path="*">
-           <Route path="/" element={<HomePage></HomePage>}></Route>
+        <Routes path="/*">
+          
            <Route path="/contact" element={<div>Contact Page <FaPhoneAlt /></div>}></Route>
            <Route path="/about" element={<div>About Page <FaInfoCircle /></div>}></Route>
            <Route path="/products" element={<div>Products Page <FaShoppingBag /></div>}></Route>
