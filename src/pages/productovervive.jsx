@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductNotFound from "./productnotfund";
 
+import toast from "react-hot-toast";
+import { addToCart } from "../utils/cartfuntion.js";
+
 export default function ProductOverview() {
     const params = useParams();
     const productId = params.id;
@@ -27,6 +30,12 @@ export default function ProductOverview() {
                 setState("not found");
             });
     }, [productId]);
+    function onAddtocart() {
+        addToCart(product.productid)
+        toast.success("Product added to cart!");
+
+       
+    }
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col items-center">
@@ -83,7 +92,7 @@ export default function ProductOverview() {
                             </div>
 
                             <div className="pt-6 border-t border-gray-50">
-                                <button className="w-full md:w-auto bg-secondary text-white px-12 py-4 rounded-2xl font-bold text-lg shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all active:scale-95">
+                                <button onClick={onAddtocart} className="w-full md:w-auto bg-secondary text-white px-12 py-4 rounded-2xl font-bold text-lg shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all active:scale-95">
                                     Add to Cart
                                 </button>
                             </div>

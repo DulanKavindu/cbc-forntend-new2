@@ -4,6 +4,7 @@ import Hadder from '../componets/hader';
 import { Route,Routes } from 'react-router-dom';
 import ProductOverview from './productovervive';
 import ProductPage from './productpage';
+import Cart from '../componets/cart';
 
 export default function HomePage() {
   return (
@@ -19,6 +20,7 @@ export default function HomePage() {
            <Route path="/products" element={<div>Products Page <FaShoppingBag /></div>}></Route>
           <Route path="/productImfro/:id" element={<ProductOverview/>}></Route>
           <Route path="/product" element={<ProductPage></ProductPage>}></Route>
+          <Route path="/cart" element={<Cart/>}></Route>
 
         </Routes>
         

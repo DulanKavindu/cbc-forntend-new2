@@ -54,10 +54,7 @@ export default function ProductCard(props) {
                         </p>
                     </div>
 
-                    <button className="flex items-center gap-3 bg-secondary text-white px-8 py-4 rounded-2xl font-bold text-sm hover:bg-blue-800 transition-all transform active:scale-95 shadow-lg shadow-blue-100 group/btn">
-                        <FaShoppingCart className="group-hover/btn:animate-bounce" />
-                        Add to Cart
-                    </button>
+                  
                 </div>
             </div>
 
