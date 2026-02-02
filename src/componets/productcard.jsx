@@ -6,8 +6,7 @@ export default function ProductCard(props) {
 
     return (
         <div className="group bg-white rounded-[32px] p-4 shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col md:flex-row gap-6 items-center relative overflow-hidden w-full max-w-4xl mx-auto">
-            
-  
+ 
             <Link 
                 to={`/productImfro/${product?.productid}`} 
                 className="w-full md:w-64 h-56 rounded-3xl bg-primary flex items-center justify-center overflow-hidden relative flex-shrink-0"
@@ -17,13 +16,13 @@ export default function ProductCard(props) {
                     alt={product?.productname} 
                     className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 p-4"
                 />
-                
+               
                 <span className="absolute top-4 left-4 bg-accent text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg shadow-orange-100">
                     Popular
                 </span>
             </Link>
 
-         
+
             <div className="flex-grow flex flex-col justify-between h-full w-full py-2">
                 <Link to={`/productImfro/${product?.productid}`} className="space-y-2">
                     <div className="flex items-center gap-2 text-accent">
