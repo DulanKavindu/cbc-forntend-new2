@@ -1,95 +1,108 @@
 import { useEffect, useState } from "react";
-import { loadCart, addToCart, saveCart } from "../utils/cartfuntion";
-import { FaTrash, FaPlus, FaMinus, FaShoppingBag } from "react-icons/fa";
+import { loadCart } from "../utils/cartfuntion";
+import CartCard from "./CartCard";
+import { FaShoppingBag, FaArrowRight, FaCreditCard } from "react-icons/fa";
+import axios from "axios";
 
 export default function Cart() {
     const [cart, setCart] = useState([]);
+    const [total, setTotal] = useState(0);
+    const [labalePrice, setLabalePrice] = useState(0);
 
     useEffect(() => {
-        setCart(loadCart());
+        const cartData = loadCart();
+        setCart(cartData);
+
+        if (cartData.length > 0) {
+            axios.post(`${import.meta.env.VITE_BACKEND_URL}/order/getquoter`, {
+                orderDetails: cartData
+            }).then((res) => {
+                console.log(res.data);
+                setTotal(res.data.totalPrice);
+                setLabalePrice(res.data.labaleTotal);
+            }).catch((err) => {
+                console.error(err);
+            });
+        }
     }, []);
 
-   
-    function handleQuantity(productId, amount) {
-        addToCart(productId, amount);
-        setCart(loadCart()); 
+    function onOderCheckout() {
+        const token = localStorage.getItem("token");
+        if (token === null) {
+            alert("Please login to proceed to checkout.");
+            return;
+        }
+
+        
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/order`, 
+            {
+                orderDetails: cart
+            }, 
+            {
+                headers: {
+                    Authorization: "Bearer " + token,
+                }
+            }
+        ).then((res) => {
+            console.log(res.data);
+            alert("Order placed successfully!");
+        }).catch((err) => {
+            console.error(err);
+            alert("Order failed!");
+        });
     }
 
-
-    function handleRemove(productId) {
-        const updatedCart = cart.filter(item => item.productId !== productId);
-        saveCart(updatedCart);
-        setCart(updatedCart);
-    }
-
-    
     return (
-        <div className="min-h-screen bg-primary p-6 md:p-12">
-            <div className="max-w-4xl mx-auto">
-            
-                <div className="flex items-center gap-4 mb-10">
-                    <div className="bg-secondary p-4 rounded-2xl">
-                        <FaShoppingBag className="text-white text-2xl" />
+        <div className="min-h-screen bg-[#FAFBFF] p-6 md:p-12 text-left font-sans">
+            <div className="max-w-6xl mx-auto">
+                <h1 className="text-4xl font-black text-gray-900 mb-10 flex items-center gap-4">
+                    Shopping Bag <FaShoppingBag className="opacity-20 text-secondary" />
+                </h1>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                    <div className="lg:col-span-2 space-y-6">
+                        {cart.length > 0 ? (
+                            cart.map(item => (
+                                <CartCard 
+                                    key={item.productId} 
+                                    productId={item.productId} 
+                                    quantity={item.quantity} 
+                                />
+                            ))
+                        ) : (
+                            <p className="text-center p-20 bg-white rounded-[40px] font-bold text-gray-400 border-2 border-dashed">
+                                Your bag is empty!
+                            </p>
+                        )}
                     </div>
-                    <div>
-                        <h1 className="text-3xl font-black text-gray-800">Your Shopping Cart</h1>
-                        <p className="text-gray-400 font-medium">{cart.length} items</p>
-                    </div>
-                </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                    
-       
-                    <div className="lg:col-span-2 space-y-4">
-                        {cart.map((item) => (
-                            <div key={item.productId} className="bg-white p-5 rounded-[30px] flex items-center gap-6 shadow-sm">
-                                <div className="w-20 h-20 bg-primary rounded-2xl flex items-center justify-center text-secondary font-bold">
-                                    IMG
+                    <div className="lg:col-span-1">
+                        <div className="bg-white p-10 rounded-[45px] shadow-xl border border-gray-50 sticky top-12 transition-all">
+                            <h2 className="text-2xl font-black text-gray-800 mb-8 flex items-center gap-3">
+                                <FaCreditCard className="text-secondary" /> Summary
+                            </h2>
+                            <div className="space-y-6">
+                                <div className="flex justify-between text-gray-500 font-medium">
+                                    <span>Shipping</span>
+                                    <span className="text-green-500 font-black tracking-widest text-sm uppercase">Free</span>
                                 </div>
-
-                                <div className="flex-grow">
-                                    <h2 className="text-lg font-bold">Product #{item.productId}</h2>
-                                    <p className="text-accent font-black text-xl">$ 0.00</p>
-                                </div>
-
                                 
-                                <div className="flex items-center bg-primary rounded-xl p-1 gap-3">
-                                    <button onClick={() => handleQuantity(item.productId, -1)} className="w-8 h-8 bg-white rounded-lg">
-                                        <FaMinus size={10} />
-                                    </button>
-                                    <span className="font-black">{item.quantity}</span>
-                                    <button onClick={() => handleQuantity(item.productId, 1)} className="w-8 h-8 bg-white rounded-lg">
-                                        <FaPlus size={10} />
-                                    </button>
+                                <div className="pt-6 border-t border-gray-100 flex justify-between items-end">
+                                    <span className="text-gray-400 font-bold uppercase text-xs tracking-widest mb-1">Total Bill</span>
+                                    <span className="text-4xl font-black text-secondary">
+                                        ${total ? total.toFixed(2) : "0.00"}
+                                    </span>
                                 </div>
 
-                                <button onClick={() => handleRemove(item.productId)} className="p-3 text-gray-300 hover:text-red-500">
-                                    <FaTrash size={18} />
+                                <button 
+                                    onClick={onOderCheckout}
+                                    className="group w-full bg-secondary text-white py-6 rounded-[25px] font-black text-xl mt-4 flex items-center justify-center gap-4 transition-all hover:bg-blue-700 active:scale-95 shadow-lg shadow-blue-100"
+                                >
+                                    Checkout Now <FaArrowRight className="group-hover:translate-x-2 transition-transform" />
                                 </button>
                             </div>
-                        ))}
-                    </div>
-
-             
-                    <div className="lg:col-span-1">
-                        <div className="bg-white p-8 rounded-[40px] shadow-xl sticky top-10">
-                            <h3 className="text-xl font-black mb-6">Order Summary</h3>
-                            <div className="space-y-4 mb-8">
-                                <div className="flex justify-between">
-                                    <span>Subtotal</span>
-                                    <span>$ 0.00</span>
-                                </div>
-                                <div className="border-t pt-4 flex justify-between font-bold">
-                                    <span>Total Price</span>
-                                    <span className="text-2xl text-secondary">$ 0.00</span>
-                                </div>
-                            </div>
-                            <button className="w-full bg-secondary text-white py-5 rounded-2xl font-bold shadow-lg shadow-blue-100">
-                                Checkout Now
-                            </button>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

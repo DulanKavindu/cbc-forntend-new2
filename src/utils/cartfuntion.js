@@ -1,9 +1,15 @@
 export function loadCart() {
     const cartData = localStorage.getItem("cart");
-    console.log("Loaded cart data:", cartData);
-    if (cartData !== null) {
+    
+
+    if (cartData === null || cartData === "undefined") {
+        return [];
+    }
+
+    try {
         return JSON.parse(cartData);
-    } else {
+    } catch  {
+        
         return [];
     }
 }
@@ -28,4 +34,12 @@ export function addToCart(productId, quantity) {
     }
 
     saveCart(cartData);
+}
+export function deleteFromCart(productId) {
+    const cartData = loadCart();
+    const index = cartData.findIndex((item) => item.productId === productId);
+    if (index !== -1) {
+        cartData.splice(index, 1);
+        saveCart(cartData);
+    }
 }

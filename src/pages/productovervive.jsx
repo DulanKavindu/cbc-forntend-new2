@@ -31,7 +31,7 @@ export default function ProductOverview() {
             });
     }, [productId]);
     function onAddtocart() {
-        addToCart(product.productid)
+        addToCart(product.productid,1);
         toast.success("Product added to cart!");
 
        
