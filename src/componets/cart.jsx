@@ -21,7 +21,7 @@ export default function Cart() {
         saveCart(updatedCart);
         setCart(updatedCart);
     }
-    const newproductid= saveCart().productId;
+
     
     return (
         <div className="min-h-screen bg-primary p-6 md:p-12">
