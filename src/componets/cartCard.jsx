@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaTrash, FaPlus, FaMinus } from "react-icons/fa";
+import { deleteFromCart } from "../utils/cartfuntion";
 
 export default function CartCard({ productId, quantity, handleQuantity, handleRemove }) {
     const [product, setProduct] = useState(null);
@@ -14,7 +15,7 @@ export default function CartCard({ productId, quantity, handleQuantity, handleRe
                     setLoaded(true);
                 }
                 else{
-                    handleRemove(productId)
+                    deleteFromCart(productId);
                 }
             })
             .catch((err) => console.error(err));
