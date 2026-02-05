@@ -6,6 +6,7 @@ import ProductOverview from './productovervive';
 import ProductPage from './productpage';
 import Cart from '../componets/cart';
 import ContactDetails from './contactDetalis';
+import OrderPage from './oderPage';
 
 export default function HomePage() {
   return (
@@ -23,6 +24,7 @@ export default function HomePage() {
           <Route path="/product" element={<ProductPage></ProductPage>}></Route>
           <Route path="/cart" element={<Cart/>}></Route>
           <Route path ="/contactDetails" element={<ContactDetails></ContactDetails>}></Route>
+          <Route path="/orders" element={<OrderPage/>}></Route>
 
         </Routes>
         

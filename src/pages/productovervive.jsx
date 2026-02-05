@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ProductNotFound from "./productnotfund";
 
 import toast from "react-hot-toast";
@@ -13,6 +13,7 @@ export default function ProductOverview() {
     const [state, setState] = useState("loading");
    
     const [selectedImg, setSelectedImg] = useState(0);
+    const navigation = useNavigate();
 
     useEffect(() => {
         
@@ -35,6 +36,14 @@ export default function ProductOverview() {
         toast.success("Product added to cart!");
 
        
+    }
+    function onBuyNow() {
+        navigation('/contactDetails',{state:{
+            item:[{
+                productId:product.productid,    
+                quantity:1
+            }]
+        }});
     }
 
     return (
@@ -95,7 +104,13 @@ export default function ProductOverview() {
                                 <button onClick={onAddtocart} className="w-full md:w-auto bg-secondary text-white px-12 py-4 rounded-2xl font-bold text-lg shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all active:scale-95">
                                     Add to Cart
                                 </button>
+                                <button onClick={onBuyNow} className="w-full md:w-auto bg-secondary text-white px-12 py-4 rounded-2xl font-bold text-lg shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all active:scale-95">
+                                   Buy Now
+                                </button>
+                                 
+                               
                             </div>
+                            
                         </div>
                     </div>
                 </div>

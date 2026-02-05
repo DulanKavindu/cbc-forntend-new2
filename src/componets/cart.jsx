@@ -29,7 +29,11 @@ export default function Cart() {
         }
     }, []);
     function navigate(){
-        navigation('/contactDetails');
+        navigation('/contactDetails',{state:{
+            item:loadCart(),
+        }
+              
+        });
     }
 
     
@@ -68,11 +72,23 @@ export default function Cart() {
                                     <span>Shipping</span>
                                     <span className="text-green-500 font-black tracking-widest text-sm uppercase">Free</span>
                                 </div>
+                                <div className="pt-6 border-t border-gray-100 flex justify-between items-end">
+                                    <span className="text-gray-400 font-bold uppercase text-xs tracking-widest mb-1">Labale Total</span>
+                                    <span className="text-4xl font-black text-secondary">
+                                        ${labalePrice ? labalePrice.toFixed(2) : "0.00"}
+                                    </span>
+                                </div>
                                 
                                 <div className="pt-6 border-t border-gray-100 flex justify-between items-end">
                                     <span className="text-gray-400 font-bold uppercase text-xs tracking-widest mb-1">Total Bill</span>
                                     <span className="text-4xl font-black text-secondary">
                                         ${total ? total.toFixed(2) : "0.00"}
+                                    </span>
+                                </div>
+                                   <div className="pt-6 border-t border-gray-100 flex justify-between items-end">
+                                    <span className="text-gray-400 font-bold uppercase text-xs tracking-widest mb-1">Discout Price</span>
+                                    <span className="text-4xl font-black text-secondary">
+                                        ${total ? (total - labalePrice).toFixed(2) : "0.00"}
                                     </span>
                                 </div>
 
