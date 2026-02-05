@@ -13,6 +13,9 @@ export default function CartCard({ productId, quantity, handleQuantity, handleRe
                     setProduct(res.data);
                     setLoaded(true);
                 }
+                else{
+                    handleRemove(productId)
+                }
             })
             .catch((err) => console.error(err));
     }, [productId]);

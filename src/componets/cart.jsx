@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { loadCart } from "../utils/cartfuntion";
 import CartCard from "./CartCard";
 import { FaShoppingBag, FaArrowRight, FaCreditCard } from "react-icons/fa";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
     const [cart, setCart] = useState([]);
     const [total, setTotal] = useState(0);
     const [labalePrice, setLabalePrice] = useState(0);
+   
+    const navigation = useNavigate();
 
     useEffect(() => {
         const cartData = loadCart();
@@ -25,32 +28,11 @@ export default function Cart() {
             });
         }
     }, []);
-
-    function onOderCheckout() {
-        const token = localStorage.getItem("token");
-        if (token === null) {
-            alert("Please login to proceed to checkout.");
-            return;
-        }
-
-        
-        axios.post(`${import.meta.env.VITE_BACKEND_URL}/order`, 
-            {
-                orderDetails: cart
-            }, 
-            {
-                headers: {
-                    Authorization: "Bearer " + token,
-                }
-            }
-        ).then((res) => {
-            console.log(res.data);
-            alert("Order placed successfully!");
-        }).catch((err) => {
-            console.error(err);
-            alert("Order failed!");
-        });
+    function navigate(){
+        navigation('/contactDetails');
     }
+
+    
 
     return (
         <div className="min-h-screen bg-[#FAFBFF] p-6 md:p-12 text-left font-sans">
@@ -95,7 +77,8 @@ export default function Cart() {
                                 </div>
 
                                 <button 
-                                    onClick={onOderCheckout}
+                                onClick={navigate}
+                                   
                                     className="group w-full bg-secondary text-white py-6 rounded-[25px] font-black text-xl mt-4 flex items-center justify-center gap-4 transition-all hover:bg-blue-700 active:scale-95 shadow-lg shadow-blue-100"
                                 >
                                     Checkout Now <FaArrowRight className="group-hover:translate-x-2 transition-transform" />

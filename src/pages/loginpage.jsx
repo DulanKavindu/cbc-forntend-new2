@@ -1,9 +1,34 @@
 import axios from "axios";
-import { useState } from "react";
+import {  useState } from "react";
 import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast/headless";
+import { useGoogleLogin } from "@react-oauth/google";
 
 export default function LoginPage() {
+  const googleLogin = useGoogleLogin({
+    onSuccess: (res)=>{
+      console.log(res)
+      axios.post(import.meta.env.VITE_BACKEND_URL+"/user/googleLogin",{
+        token : res.access_token
+      }).then(
+        (res)=>{
+          if(res.data.message == "User created"){
+            toast.success("Your account is created now you can login via google.")
+          }else{
+            localStorage.setItem("token",res.data.token)
+            if(res.data.user?.type === "admin"){
+              window.location.href = "/admin"
+            }else{
+              window.location.href = "/"
+            }
+          }
+        }
+      )
+    }
+  })
+
+
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -74,6 +99,12 @@ export default function LoginPage() {
           >
             Login Now
           </button>
+            <button 
+            className="w-full bg-blue-500 text-white font-bold py-3 rounded-xl mt-4 hover:bg-blue-700 hover:shadow-lg transform hover:-translate-y-0.5 transition-all active:scale-95"
+            onClick={googleLogin}
+          >
+          Google Login
+          </button>
         </div>
 
         <p className="mt-8 text-sm text-gray-400">
@@ -83,3 +114,4 @@ export default function LoginPage() {
     </div>
   );
 }
+    
