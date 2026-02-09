@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ProductNotFound from "./productnotfund";
+import ReviewSection from "../componets/ReviewSection.jsx";
 
 import toast from "react-hot-toast";
 import { addToCart } from "../utils/cartfuntion.js";
@@ -84,7 +85,6 @@ export default function ProductOverview() {
                             </div>
                         </div>
 
-                        {/* 📝 Details Section */}
                         <div className="flex flex-col justify-center space-y-5">
                             <div>
                                 <h1 className="text-4xl font-black text-gray-800 leading-tight">{product?.productname}</h1>
@@ -100,18 +100,19 @@ export default function ProductOverview() {
                                 <span className="text-sm text-gray-400 font-bold line-through">$ {product?.price + 50}</span>
                             </div>
 
-                            <div className="pt-6 border-t border-gray-50">
-                                <button onClick={onAddtocart} className="w-full md:w-auto bg-secondary text-white px-12 py-4 rounded-2xl font-bold text-lg shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all active:scale-95">
+                            <div className="pt-6 border-t border-gray-50 flex gap-4">
+                                <button onClick={onAddtocart} className="flex-1 bg-secondary text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all active:scale-95">
                                     Add to Cart
                                 </button>
-                                <button onClick={onBuyNow} className="w-full md:w-auto bg-secondary text-white px-12 py-4 rounded-2xl font-bold text-lg shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all active:scale-95">
+                                <button onClick={onBuyNow} className="flex-1 bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-lg shadow-slate-200 hover:bg-slate-800 transition-all active:scale-95">
                                    Buy Now
                                 </button>
-                                 
-                               
                             </div>
-                            
                         </div>
+                    </div>
+
+                    <div className="mt-12 w-full">
+                        <ReviewSection productId={productId} />
                     </div>
                 </div>
             )}
