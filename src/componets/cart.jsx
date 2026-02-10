@@ -1,6 +1,6 @@
 import {  useEffect, useState } from "react";
 import { loadCart } from "../utils/cartfuntion";
-import CartCard from "./CartCard";
+import CartCard from "./cartCard";
 import { FaShoppingBag, FaArrowRight, FaCreditCard } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
