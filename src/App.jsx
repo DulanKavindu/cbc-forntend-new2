@@ -18,11 +18,12 @@ function App() {
       <GoogleOAuthProvider clientId="847558995277-017sa8dsnag4ia0n8gqqv4uvathjr77d.apps.googleusercontent.com">
         <Toaster></Toaster>
         <Routes>
-        <Route path="/*" element={<HomePage />} />
+      
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signin" element={<SignupPage />} />
         <Route path ="/testing" element ={<Test/>}/>
         <Route path="/admin/*" element={<AdminPage />} />
+        <Route path="/*" element={<HomePage />} />
        
         </Routes>
         </GoogleOAuthProvider>
