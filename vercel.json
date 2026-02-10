@@ -1,8 +1,24 @@
 {
-  "rewrites":[
+  "rewrites": [
+    {
+      "source": "/user/(.*)",
+      "destination": "/user/$1"
+    },
+    {
+      "source": "/product/(.*)",
+      "destination": "/product/$1"
+    },
+    {
+      "source": "/order/(.*)",
+      "destination": "/order/$1"
+    },
+    {
+      "source": "/review/(.*)",
+      "destination": "/review/$1"
+    },
     {
       "source": "/(.*)",
-      "destination":"/"
+      "destination": "/"
     }
   ]
 }
